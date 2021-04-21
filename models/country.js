@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
     capital: DataTypes.STRING,
     continent: DataTypes.STRING,
     region: DataTypes.STRING,
-    GDP: DataTypes.INTEGER,
+    gdp: DataTypes.INTEGER,
     literacy: DataTypes.FLOAT,
     population: DataTypes.INTEGER,
     density_pop: DataTypes.INTEGER,
