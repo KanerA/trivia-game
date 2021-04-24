@@ -5750,6 +5750,30 @@ module.exports = {
         country.phones_per_1000 =
           country.phones_per_1000 &&
           parseFloat(country.phones_per_1000.replace(",", "."));
+        country.cost_of_living_index = 
+          country.cost_of_living_index &&
+          parseFloat(country.cost_of_living_index);
+        country.rent_index = 
+          country.rent_index &&
+          parseFloat(country.rent_index);
+        country.restaurant_price_index = 
+          country.restaurant_price_index &&
+          parseFloat(country.restaurant_price_index);
+        country.groceries_index = 
+          country.groceries_index &&
+          parseFloat(country.groceries_index);
+        country.quality_of_life_index = 
+          country.quality_of_life_index &&
+          parseFloat(country.quality_of_life_index);
+        country.health_care_index = 
+          country.health_care_index &&
+          parseFloat(country.health_care_index);
+        country.pollution_index = 
+          country.pollution_index &&
+          parseFloat(country.pollution_index);
+        country.traffic_commute_time_index = 
+          country.traffic_commute_time_index &&
+          parseFloat(country.traffic_commute_time_index);
         country.created_at = new Date();
         country.updated_at = new Date();
         return country;
