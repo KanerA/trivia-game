@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class country extends Model {
+  class create - country extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  country.init({
+  create - country.init({
     country: DataTypes.STRING,
     capital: DataTypes.STRING,
     continent: DataTypes.STRING,
@@ -39,8 +39,8 @@ module.exports = (sequelize, DataTypes) => {
     traffic_commute_time_index: DataTypes.FLOAT
   }, {
     sequelize,
-    modelName: 'country',
+    modelName: 'create-country',
     underscored: true,
   });
-  return country;
+  return create - country;
 };

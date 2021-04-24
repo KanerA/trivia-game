@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Countries', {
+    await queryInterface.createTable('countries', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -20,7 +20,7 @@ module.exports = {
       region: {
         type: Sequelize.STRING
       },
-      GDP: {
+      gdp: {
         type: Sequelize.INTEGER
       },
       literacy: {
@@ -50,6 +50,33 @@ module.exports = {
       safety_index: {
         type: Sequelize.FLOAT
       },
+      phones_per_1000: {
+        type: Sequelize.FLOAT
+      },
+      cost_of_living_index: {
+        type: Sequelize.FLOAT
+      },
+      rent_index: {
+        type: Sequelize.FLOAT
+      },
+      restaurant_price_index: {
+        type: Sequelize.FLOAT
+      },
+      groceries_index: {
+        type: Sequelize.FLOAT
+      },
+      quality_of_life_index: {
+        type: Sequelize.FLOAT
+      },
+      health_care_index: {
+        type: Sequelize.FLOAT
+      },
+      pollution_index: {
+        type: Sequelize.FLOAT
+      },
+      traffic_commute_time_index: {
+        type: Sequelize.FLOAT
+      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE
@@ -61,6 +88,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Countries');
+    await queryInterface.dropTable('countries');
   }
 };
