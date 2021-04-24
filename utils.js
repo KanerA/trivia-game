@@ -1,7 +1,6 @@
 const { Op } = require('sequelize');
 const { country, question } = require('./models');
 const sequelize = require('sequelize');
-const { Sequelize } = require('sequelize');
 
 const getQuestion = async (req, res) => {
     const result = await question.findAll({
@@ -16,6 +15,11 @@ const getQuestion = async (req, res) => {
         case 1:
             countries = await country.findAll({
                 attributes: ['country', selectedQuestion.columns],
+                where: {
+                    [selectedQuestion.columns]: {
+                      [Op.ne]: null
+                    }
+                },
                 order: sequelize.literal('rand()'),
                 limit: 4,
             });
@@ -25,6 +29,11 @@ const getQuestion = async (req, res) => {
         case 2:
             countries = await country.findAll({
                 attributes: ['country', selectedQuestion.columns],
+                where: {
+                    [selectedQuestion.columns]: {
+                      [Op.ne]: null
+                    }
+                },
                 group: selectedQuestion.columns,
                 order: sequelize.literal('rand()'),
                 limit: 4,
@@ -37,6 +46,11 @@ const getQuestion = async (req, res) => {
         case 3:
             countries = await country.findAll({
                 attributes: ['country', selectedQuestion.columns],
+                where: {
+                    [selectedQuestion.columns]: {
+                      [Op.ne]: null
+                    }
+                },
                 order: sequelize.literal('rand()'),
                 limit: 2,
             });
