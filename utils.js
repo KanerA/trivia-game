@@ -19,7 +19,7 @@ const getQuestion = async (req, res) => {
                 order: sequelize.literal('rand()'),
                 limit: 4,
             });
-            questionObject.answers = countries.map(countryData => countryData.country);
+            questionObject.answers = countries.map(countryData => countryData.dataValues.country);
             res.json(questionObject);
             break;
         case 2:
@@ -31,7 +31,7 @@ const getQuestion = async (req, res) => {
             });
             let randomIndex = Math.floor(Math.random() * 4);
             questionObject.question = questionObject.question.replace('~X~', countries[randomIndex].dataValues.country);
-            questionObject.answers = countries.map(countryData => countryData[selectedQuestion.columns]);
+            questionObject.answers = countries.map(countryData => countryData.dataValues[selectedQuestion.columns]);
             res.json(questionObject);
             break;
         case 3:
