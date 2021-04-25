@@ -30,7 +30,7 @@ const getQuestion = async (req, res) => {
                     return a[column] - b[column];
                 }))
                 .slice(0, 1);       
-            questionObject.answer = answer1;
+            questionObject.answer = answer1[0].country;
             questionObject.options = countries.map(countryData => countryData.dataValues.country);
             res.json(questionObject);
             break;
