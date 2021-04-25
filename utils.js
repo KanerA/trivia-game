@@ -86,10 +86,34 @@ const getQuestion = async (req, res) => {
 }
 
 const saveRatedQuestion = async (req, res) => {
+    console.log(body);
     try{
-        await saved_question.create(req.body);
-        res.status(200).json({message: 'Question saved successfully'});
-    } catch(err) {
+        const {body} = req;
+        const saved = saved_question.findOne({
+            where: { [Op.and]:{
+                    question:{
+                        [Op.eq]: body.question
+                    },
+                    option_1: {
+                        [Op.eq]: body.option_1
+                    },
+                    option_2: {
+                        [Op.eq]: body.option_2
+                    },
+                    option_3: {
+                        [Op.eq]: body.option_3
+                    },
+                    option_4: {
+                        [Op.eq]: body.option_4
+                    },
+                }
+            }
+        })
+        if(saved){
+            await saved_question.create(body);
+            res.status(200).json({message: 'Question saved successfully'});
+        }
+        } catch(err) {
         res.status(500).json({error: err.message});
     }
 }
