@@ -1,5 +1,5 @@
 import './App.css';
-import Option from './components/Option.js';
+import Question from './components/Question.js';
 
 function App() {
   let mockData = {
@@ -14,8 +14,7 @@ function App() {
     }
   return (
     <div className="App">
-      <h1>{mockData.question}</h1>
-      {mockData.answers.map(answer => <Option answer={answer} />)}
+      <Question data={mockData} />
     </div>
   );
 }
