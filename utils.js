@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { country, question } = require('./models');
+const { country, question, saved_question } = require('./models');
 const sequelize = require('sequelize');
 
 const getQuestion = async (req, res) => {
@@ -86,7 +86,12 @@ const getQuestion = async (req, res) => {
 }
 
 const saveRatedQuestion = async (req, res) => {
-    
+    try{
+        await saved_question.create(req.body);
+        res.status(200).json({message: 'Question saved successfully'});
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
 }
 
 module.exports = { getQuestion, saveRatedQuestion };
