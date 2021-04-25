@@ -1,23 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
+import Option from './components/Option.js';
 
 function App() {
+  let mockData = {
+    "question": "Which country is the largest by total area?",
+    "desc": true,
+    "answers": [
+    "Saint Vincent and the Grenadines",
+    "Ukraine",
+    "Tajikistan",
+    "Kyrgyzstan"
+    ]
+    }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{mockData.question}</h1>
+      {mockData.answers.map(answer => <Option answer={answer} />)}
     </div>
   );
 }
