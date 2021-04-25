@@ -77,6 +77,10 @@ const getQuestion = async (req, res) => {
             questionObject.question = questionObject.question.replace('~X~', firstCountry.country);
             questionObject.question = questionObject.question.replace('~Y~', secondCountry.country);
             questionObject.answers = ["true", "false"];
+            // numerical based answers, if the first country's value in the question is bigger than 
+            // the second country's value, the answer is true, otherwise , false
+            const answer = firstCountry[column] - secondCountry[column] > 0 ? "true" : "false";
+            questionObject.answer = answer;
             res.json(questionObject);
             break;
     }
