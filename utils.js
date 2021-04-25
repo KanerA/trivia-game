@@ -25,14 +25,14 @@ const getQuestion = async (req, res) => {
                 order: sequelize.literal('rand()'),
                 limit: 4,
             });
-            answer = 
+            const answer1 = 
                 (countries.sort((a, b) => {
                     if(selectedQuestion.desc) return b[column] - a[column];
                     return a[column] - b[column];
                 }))
                 .slice(0, 1);       
-            questionObject.answer = answer;
-            questionObject.answers = countries.map(countryData => countryData.dataValues.country);
+            questionObject.answer = answer1;
+            questionObject.options = countries.map(countryData => countryData.dataValues.country);
             res.json(questionObject);
             break;
         case 2:
@@ -50,14 +50,14 @@ const getQuestion = async (req, res) => {
             let randomIndex = Math.floor(Math.random() * 4);
             const replacementWord = countries[randomIndex].dataValues.country;
             questionObject.question = questionObject.question.replace('~X~', replacementWord);
-            questionObject.answers = countries.map(countryData => countryData.dataValues[column]);
-            answer = 
+            questionObject.options = countries.map(countryData => countryData.dataValues[column]);
+            const answer2 = 
                 (countries.filter(country => { // filter with the country in the question to get the right country object
                     if(replacementWord === country.dataValues.country) return country.dataValues[column];
                 })
                 )[0] // filter returns an array and we want the first and basically the only object in the array
                 .dataValues[column]; // gets the value of the answer 
-            questionObject.answer = answer;
+            questionObject.answer = answer2;
             res.json(questionObject);
             break;
         case 3:
@@ -76,11 +76,11 @@ const getQuestion = async (req, res) => {
             const secondCountry = countries[1- randomIndex3].dataValues;
             questionObject.question = questionObject.question.replace('~X~', firstCountry.country);
             questionObject.question = questionObject.question.replace('~Y~', secondCountry.country);
-            questionObject.answers = ["true", "false"];
-            // numerical based answers, if the first country's value in the question is bigger than 
+            questionObject.options = ["true", "false"];
+            // numerical based options, if the first country's value in the question is bigger than 
             // the second country's value, the answer is true, otherwise , false
-            const answer = firstCountry[column] - secondCountry[column] > 0 ? "true" : "false";
-            questionObject.answer = answer;
+            const answer3 = firstCountry[column] - secondCountry[column] > 0 ? "true" : "false";
+            questionObject.answer = answer3;
             res.json(questionObject);
             break;
     }
