@@ -12,7 +12,6 @@ const getQuestion = async (req, res) => {
     questionObject.question = selectedQuestion.template;
     questionObject.desc = selectedQuestion.desc;
     let countries;
-    let answer;
     switch(selectedQuestion.type){
         case 1:
             countries = await country.findAll({
@@ -86,4 +85,8 @@ const getQuestion = async (req, res) => {
     }
 }
 
-module.exports = { getQuestion };
+const saveRatedQuestion = async (req, res) => {
+    
+}
+
+module.exports = { getQuestion, saveRatedQuestion };
