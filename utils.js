@@ -3,13 +3,13 @@ const { country, question } = require('./models');
 const sequelize = require('sequelize');
 
 const getQuestion = async (req, res) => {
-    const result = await question.findAll({
+    const result = await question.findOne({
         order: sequelize.literal('rand()'),
-        limit: 1,
     });
     const questionObject = {};
-    const selectedQuestion = result[0].dataValues;
+    const selectedQuestion = result.dataValues;
     questionObject.question = selectedQuestion.template;
+    questionObject.desc = selectedQuestion.desc;
     let countries;
     switch(selectedQuestion.type){
         case 1:
