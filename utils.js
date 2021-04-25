@@ -23,6 +23,13 @@ const getQuestion = async (req, res) => {
                 order: sequelize.literal('rand()'),
                 limit: 4,
             });
+            const answer = 
+                (countries.sort((a, b) => {
+                    if(selectedQuestion.desc) return b[selectedQuestion.columns] - a[selectedQuestion.columns];
+                    return a[selectedQuestion.columns] - b[selectedQuestion.columns];
+                }))
+                .slice(0, 1);       
+            questionObject.answer = answer;
             questionObject.answers = countries.map(countryData => countryData.dataValues.country);
             res.json(questionObject);
             break;
