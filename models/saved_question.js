@@ -21,13 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     option_4: DataTypes.STRING,
     answer: DataTypes.STRING,
     rating: DataTypes.FLOAT,
-    vote_count: DataTypes.INTEGER,
-    answered_correct: DataTypes.INTEGER,
-    answered_wrong: DataTypes.INTEGER
+    vote_count: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'saved_question',
-    underscored: true,
   });
   return saved_question;
 };
