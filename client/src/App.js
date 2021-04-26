@@ -9,7 +9,6 @@ function App() {
 
   const getData = async () => {
     const { data } = await axios.get('/quiz/question');
-    console.log(data);
     setQuestion(data.question);
     setOptions(data.options)
   }
