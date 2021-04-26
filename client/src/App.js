@@ -4,24 +4,15 @@ import Question from './components/Question.js';
 import axios from 'axios';
 
 function App() {
-  const [questionData, setQuestionData] = useState([])
+  const [question, setQuestion] = useState('');
+  const [options, setOptions] = useState([]);
 
   const getData = async () => {
     const { data } = await axios.get('/quiz/question');
     console.log(data);
-    setQuestionData([data]);
+    setQuestion(data.question);
+    setOptions(data.options)
   }
-
-  // let mockData = {
-  //   "question": "Which country is the largest by total area?",
-  //   "desc": true,
-  //   "answers": [
-  //   "Saint Vincent and the Grenadines",
-  //   "Ukraine",
-  //   "Tajikistan",
-  //   "Kyrgyzstan"
-  //   ]
-  //   }
 
     useEffect(()=>{
       getData()
@@ -29,7 +20,7 @@ function App() {
     
   return (
     <div className="App">
-      <Question data={questionData} />
+      <Question question = {question} options = {options} />
     </div>
   );
 }
