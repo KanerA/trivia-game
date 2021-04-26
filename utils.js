@@ -110,10 +110,15 @@ const saveRatedQuestion = async (req, res) => {
         }
         const saved = await saved_question.findOne(savedQuery)
         if(!saved){
+            body.vote_count = 1;
             await saved_question.create(body); // saves the question in the saved_question table
             res.status(200).json({ message: 'Question saved successfully' });
         } else {
-            await saved_question.update(body, savedQuery);
+            const updatedObj = body;
+            const newRating = ((saved.rating) * saved.vote_count + body.rating) / (saved.vote_count + 1);
+            updatedObj.rating = newRating;
+            updatedObj.vote_count = saved.vote_count + 1;
+            await saved_question.update(updatedObj, savedQuery);
             res.status(200).json({  message: "update" });
         }
     } catch(err) {
