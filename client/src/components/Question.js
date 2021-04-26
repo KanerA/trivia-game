@@ -6,8 +6,8 @@ export default function Question({ question, options }) {
   return (
           <form action="/quiz/question/rate" method="post">
           <h1>{question}</h1>
-          {options&&options.map(option =>
-            <div>
+          {options&&options.map((option, index) =>
+            <div key = {`option-${index}`}>
               <input type="radio" id={option} name="option" value={option} />
               <label htmlFor={option}>{option}</label><br />
             </div>
