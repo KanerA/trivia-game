@@ -134,7 +134,7 @@ const saveRatedQuestion = async (req, res) => {
     }
 }
 
-const createUser = async (req, res) => {
+const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     const { body } = req;    
     const user = await users.create({
         name: body.name,
@@ -143,7 +143,7 @@ const createUser = async (req, res) => {
     res.send(user);
 }
 
-const updateUserScore = async (req, res) => {
+const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user
     const { body } = req;
     const user = await users.findOne({
         where: {
