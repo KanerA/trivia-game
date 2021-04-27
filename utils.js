@@ -143,4 +143,20 @@ const createUser = async (req, res) => {
     res.send(user);
 }
 
-module.exports = { getQuestion, saveRatedQuestion, createUser };
+const updateUserScore = async (req, res) => {
+    const { body } = req;
+    const user = await users.findOne({
+        where: {
+            id: body.id
+        }
+    })
+    const userScore = user.dataValues.score + body.score;
+    const updatedUser = await users.update({ score: userScore }, {
+        where: { 
+            id: body.id
+        }
+    })
+    res.json(updatedUser);
+};
+
+module.exports = { getQuestion, saveRatedQuestion, createUser, updateUserScore };

@@ -1,7 +1,8 @@
 const { Router } = require('express');
-const { createUser } = require('../../../utils');
+const { createUser, updateUserScore } = require('../../../utils');
 const user = Router();
 
 user.post('/', createUser);
+user.patch('/', updateUserScore);
 
 module.exports = user;
