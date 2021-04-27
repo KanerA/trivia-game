@@ -143,18 +143,15 @@ const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     res.send(user);
 }
 
-const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user
+const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=userID
     const { body } = req;
+    const id = req.params.id;
     const user = await users.findOne({
-        where: {
-            id: body.id
-        }
+        where: { id }
     })
     const userScore = user.dataValues.score + body.score;
     const updatedUser = await users.update({ score: userScore }, {
-        where: { 
-            id: body.id
-        }
+        where: { id }
     })
     res.json(updatedUser);
 };
