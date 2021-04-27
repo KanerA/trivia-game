@@ -1,5 +1,5 @@
 const { Op } = require('sequelize');
-const { country, question, saved_question } = require('./models');
+const { country, question, saved_question, users } = require('./models');
 const sequelize = require('sequelize');
 
 const getQuestion = async (req, res) => {
@@ -134,4 +134,13 @@ const saveRatedQuestion = async (req, res) => {
     }
 }
 
-module.exports = { getQuestion, saveRatedQuestion };
+const createUser = async (req, res) => {
+    const { body } = req;    
+    const user = await users.create({
+        name: body.name,
+        score: 0,
+    });
+    res.send(user);
+}
+
+module.exports = { getQuestion, saveRatedQuestion, createUser };
