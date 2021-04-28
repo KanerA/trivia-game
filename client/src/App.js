@@ -55,6 +55,15 @@ export default function App() {
 		setQuestionsAnswered(questionsAnswered + 1);
 		setRate(false);
 		getQuestion();
+	};
+
+	const rateQuestion = async () => {
+
+		handleAnswerOptionClick();
+	};
+
+	const onSkipClick = async () => {
+
 		handleAnswerOptionClick();
 	};
 
