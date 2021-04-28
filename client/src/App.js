@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import Question from './components/Question';
+import RateQuestion from './components/RateQuestion';
 
 // function App() {
 //   const [question, setQuestion] = useState('');
@@ -33,6 +34,7 @@ export default function App() {
 	const [showScore, setShowScore] = useState(false);
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
+	const [rate, setRate] = useState(false);
 
 	useEffect(()=>{
 		getQuestion()
@@ -49,21 +51,27 @@ export default function App() {
 		if (answerOption === currentQuestion.answer) {
 			setScore(score + 1);
 		} else setStrikes(strikes + 1);
-
-		setQuestionsAnswered(questionsAnswered + 1);
-
-		getQuestion();
 		
+		setQuestionsAnswered(questionsAnswered + 1);
+		setRate(false);
+		getQuestion();
+		handleAnswerOptionClick();
 	};
+
 	return (
 		<div className='app'>
 			{showScore ? (
 				<div className='score-section'>
 					You scored {score} out of {questionsAnswered}
 				</div>
-			) : (
+			) : rate ? 
+			<>	
+				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRate = {setRate} />
+				<RateQuestion onRateClick = {rateQuestion} onSkipClick = {onSkipClick} />
+		 	</>
+			: (
 				<>
-					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} handleAnswerOptionClick = {handleAnswerOptionClick} />
+					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRate = {setRate} />
  				</>
 			)}
 		</div>
