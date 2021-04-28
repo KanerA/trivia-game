@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import Question from './components/Question.js';
 import axios from 'axios';
+import Question from './components/Question';
 
 // function App() {
 //   const [question, setQuestion] = useState('');
@@ -41,7 +41,6 @@ export default function App() {
 	async function getQuestion(){
 		let { data } = await axios.get('/quiz/question');
 		setCurrentQuestion(data);
-		console.log(data);
 	}
 
 	const handleAnswerOptionClick = (answerOption) => {
@@ -64,18 +63,8 @@ export default function App() {
 				</div>
 			) : (
 				<>
-					<div className='question-section'>
-						<div className='question-count'>
-							<span>Question {questionsAnswered + 1}</span>
-						</div>
-						<div className='question-text'>{currentQuestion.question}</div>
-					</div>
-					<div className='answer-section'>
-						{currentQuestion.options && currentQuestion.options.map((answerOption) => (
-							<button onClick={() => handleAnswerOptionClick(answerOption)}>{answerOption}</button>
-						))}
-					</div>
-				</>
+					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} handleAnswerOptionClick = {handleAnswerOptionClick} />
+ 				</>
 			)}
 		</div>
 	);
