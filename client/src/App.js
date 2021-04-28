@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import axios from 'axios';
 import Question from './components/Question';
@@ -35,6 +35,7 @@ export default function App() {
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
 	const [rate, setRate] = useState(false);
+	let ratingOption;
 
 	useEffect(()=>{
 		getQuestion()
@@ -62,6 +63,10 @@ export default function App() {
 		handleAnswerOptionClick();
 	};
 
+	const onRateOptionClick = (option) => {
+		ratingOption = option;
+	};
+
 	const onSkipClick = async () => {
 
 		handleAnswerOptionClick();
@@ -76,7 +81,7 @@ export default function App() {
 			) : rate ? 
 			<>	
 				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRate = {setRate} />
-				<RateQuestion onRateClick = {rateQuestion} onSkipClick = {onSkipClick} />
+				<RateQuestion onRateClick = {rateQuestion} onSkipClick = {onSkipClick} onRateOptionClick = {onRateOptionClick} />
 		 	</>
 			: (
 				<>
