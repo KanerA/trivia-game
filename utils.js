@@ -12,14 +12,6 @@ const getQuestion = async (req, res) => {
     questionObject.question = selectedQuestion.template;
     questionObject.desc = selectedQuestion.desc;
     let countries;
-    const savedQuestions = await saved_question.findAll({});
-    if(counter/3 === 0 && savedQuestions.length >= 7){
-        const savedQuestionObject = await saved_question.findAll({
-            order: sequelize.literal('rand()'),
-            limit:1,
-        })
-        return res.status(200).json(savedQuestionObject)
-    }
     switch(selectedQuestion.type){
         case 1:
             countries = await country.findAll({
