@@ -35,6 +35,9 @@ export default function App() {
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
 	const [rate, setRate] = useState(false);
+	// const [ratingNumber, setRatingNumber] = useState(null);
+	// const [userId, setUserId] = useState(null);
+
 	let ratingOption;
 
 	useEffect(()=>{
@@ -52,6 +55,25 @@ export default function App() {
 		if (answerOption === currentQuestion.answer) {
 			setScore(score + 1);
 		} else setStrikes(strikes + 1);
+
+		// if(!userId){
+		// 	await axios.post('quiz/users',{
+				
+		// 	});
+		// } else {			
+		// 	await axios.patch('/quiz/user', {
+				
+		// 	});
+		// }
+
+		// if(!ratingNumber) { // post request to rate
+			// await axios.post('', {
+			// 	question,
+			// 	rating,
+			// 	options...,
+			// 	answer,
+			// })
+		// }
 		
 		setQuestionsAnswered(questionsAnswered + 1);
 		setRate(false);
@@ -64,7 +86,7 @@ export default function App() {
 	};
 
 	const onRateOptionClick = (option) => {
-		ratingOption = option;
+		ratingOption = option; // possible to give this variable to the component and change it there
 	};
 
 	const onSkipClick = async () => {
