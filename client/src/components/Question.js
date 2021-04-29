@@ -13,7 +13,7 @@ export default function Question({ currentQuestion, questionsAnswered, setRate }
         <div className = 'answer-section'>
           {
             currentQuestion.options && currentQuestion.options.map((option, index) => (
-              <Option option = {option} index = {index} setRate = {setRate} />
+              <Option className='option' option = {option} index = {index} setRate = {setRate} />
             ))
           }
         </div>

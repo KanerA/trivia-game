@@ -35,7 +35,7 @@ export default function App() {
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
 	const [rate, setRate] = useState(false);
-	// const [ratingNumber, setRatingNumber] = useState(null);
+	const [ratingNumber, setRatingNumber] = useState(null);
 	// const [userId, setUserId] = useState(null);
 
 	let ratingOption;
