@@ -27,10 +27,6 @@ export default function App() {
 		setCurrentQuestion(data);
 	};
 
-	const createUser = async () => {
-
-	};
-
 	const handleAnswerRateQuestion = async (isRate) => {
 		console.log(userRating.current);
 		if (userAnswer === currentQuestion.answer) {
