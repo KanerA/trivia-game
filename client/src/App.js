@@ -28,7 +28,6 @@ export default function App() {
 	};
 
 	const handleAnswerRateQuestion = async (isRate) => {
-		console.log(userRating.current);
 		if (userAnswer === currentQuestion.answer) {
 			setScore(score + 1);
 		} else setStrikes(strikes + 1);
