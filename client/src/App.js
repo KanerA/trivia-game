@@ -4,6 +4,7 @@ import './App.css';
 import axios from 'axios';
 import Quiz from './components/Quiz';
 import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 export default function App() {
 	const [currentQuestion, setCurrentQuestion] = useState('');
@@ -56,7 +57,7 @@ export default function App() {
 			answer: currentQuestion.answer,
 			rating: userRating.current,
 		}
-		const userResponse = await axios.post('/quiz/user', userObject);
+		const userResponse = await axios.patch('/quiz/user', userObject);
 		await axios.post('/quiz/question/rate', savedQuestion);
 		setUserId(userResponse.data.id);
 		getQuestion();
@@ -71,6 +72,13 @@ export default function App() {
 		userPassword.current = evt.target.value;
 	};
 
+	const userSignUp = async () => {
+		const res = await axios.post('/quiz/user/signup', {
+			name: userName.current,
+		});
+		setUserId(res.data.id);
+	};
+
 	return (
 		<>
 		<Router>
@@ -79,7 +87,11 @@ export default function App() {
 			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} />
 		</Route>
 		<Route path = '/signup'>
-			
+			<SignUp 
+				onClick = {userSignUp}
+				onUserNameChange = {onUserNameChange}
+				onPasswordChange = {onPasswordChange}
+			/>
 		</Route>
         <Route path = '/quiz' exact>
 			<Quiz 
