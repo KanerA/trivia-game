@@ -34,9 +34,9 @@ export default function App() {
 	const [showScore, setShowScore] = useState(false);
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
-	const [rate, setRate] = useState(false);
-	const [ratingNumber, setRatingNumber] = useState(null);
-	// const [userId, setUserId] = useState(null);
+	const [rateTheQuestion, setRateTheQuestion] = useState(false);
+	const userRating = useRef(0);
+	const [userId, setUserId] = useState(null);
 
 	let ratingOption;
 
@@ -47,7 +47,7 @@ export default function App() {
 	async function getQuestion(){
 		let { data } = await axios.get('/quiz/question');
 		setCurrentQuestion(data);
-	}
+	};
 
 	const handleAnswerOptionClick = (answerOption) => {
 		if (strikes === 2) setShowScore(true);
@@ -76,17 +76,13 @@ export default function App() {
 		// }
 		
 		setQuestionsAnswered(questionsAnswered + 1);
-		setRate(false);
+		setRateTheQuestion(false);
 		getQuestion();
 	};
 
 	const rateQuestion = async () => {
 
 		handleAnswerOptionClick();
-	};
-
-	const onRateOptionClick = (option) => {
-		ratingOption = option; // possible to give this variable to the component and change it there
 	};
 
 	const onSkipClick = async () => {
@@ -100,14 +96,14 @@ export default function App() {
 				<div className='score-section'>
 					You scored {score} out of {questionsAnswered}
 				</div>
-			) : rate ? 
+			) : rateTheQuestion ? 
 			<>	
-				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRate = {setRate} />
-				<RateQuestion onRateClick = {rateQuestion} onSkipClick = {onSkipClick} onRateOptionClick = {onRateOptionClick} />
+				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRateTheQuestion = {setRateTheQuestion} />
+				<RateQuestion onRateClick = {rateQuestion} onSkipClick = {onSkipClick} userRating = {userRating} />
 		 	</>
 			: (
 				<>
-					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRate = {setRate} />
+					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRateTheQuestion = {setRateTheQuestion} />
  				</>
 			)}
 		</div>
