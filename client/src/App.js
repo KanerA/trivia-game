@@ -10,9 +10,9 @@ export default function App() {
 	const [showScore, setShowScore] = useState(false);
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
-	const [rateTheQuestion, setRateTheQuestion] = useState(false);
-	const userRating = useRef(0);
+	const [userAnswer, setUserAnswer] = useState(null);
 	const [userId, setUserId] = useState(null);
+	const userRating = useRef(null);
 
 	let ratingOption;
 
@@ -24,46 +24,24 @@ export default function App() {
 		let { data } = await axios.get('/quiz/question');
 		setCurrentQuestion(data);
 	};
-	
-	const handleAnswerOptionClick = (answerOption) => {
-		if (strikes === 2) setShowScore(true);
 
-		if (answerOption === currentQuestion.answer) {
+	const createUser = async () => {
+
+	};
+
+	const handleAnswerRateQuestion = async (isRate) => {
+		console.log(userRating.current);
+		if (userAnswer === currentQuestion.answer) {
 			setScore(score + 1);
 		} else setStrikes(strikes + 1);
 
-		// if(!userId){
-		// 	await axios.post('quiz/users',{
-				
-		// 	});
-		// } else {			
-		// 	await axios.patch('/quiz/user', {
-				
-		// 	});
-		// }
-
-		// if(!ratingNumber) { // post request to rate
-			// await axios.post('', {
-			// 	question,
-			// 	rating,
-			// 	options...,
-			// 	answer,
-			// })
-		// }
-		
 		setQuestionsAnswered(questionsAnswered + 1);
-		setRateTheQuestion(false);
-		getQuestion();
-	};
+		setUserAnswer(null);
+		if (strikes === 3) return setShowScore(true);
 
-	const rateQuestion = async () => {
+		if(!isRate || !userRating.current) return getQuestion();
 
-		handleAnswerOptionClick();
-	};
 
-	const onSkipClick = async () => {
-
-		handleAnswerOptionClick();
 	};
 
 	return (
@@ -72,14 +50,14 @@ export default function App() {
 				<div className='score-section'>
 					You scored {score} out of {questionsAnswered}
 				</div>
-			) : rateTheQuestion ? 
+			) : userAnswer ? 
 			<>	
-				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRateTheQuestion = {setRateTheQuestion} />
-				<RateQuestion onRateClick = {rateQuestion} onSkipClick = {onSkipClick} userRating = {userRating} />
+				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
+				<RateQuestion onClick = {handleAnswerRateQuestion} userRating = {userRating} />
 		 	</>
 			: (
 				<>
-					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setRateTheQuestion = {setRateTheQuestion} />
+					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
  				</>
 			)}
 		</div>
