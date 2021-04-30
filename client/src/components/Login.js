@@ -11,10 +11,10 @@ function Login({onPasswordChange, onUserNameChange}) {
                 </div>
                 <div className = 'password'>
                     <label>password</label>
-                    <input type = 'password' />
+                    <input onChange = {onPasswordChange} type = 'password' />
                 </div>
                 <button>Login</button>
-                <button>Sign-up</button>
+                <Link to ='/signup'><button>Sign-up</button></Link>
             </div>
             <Link to = '/quiz'>Quiz</Link>
         </>
