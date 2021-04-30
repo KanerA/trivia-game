@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Option from './Option.js';
 
-export default function Question({ currentQuestion, questionsAnswered, setRate }) {
+export default function Question({ currentQuestion, questionsAnswered, setRateTheQuestion }) {
 
   return (<>
         <div className='question-section'>
@@ -13,7 +13,7 @@ export default function Question({ currentQuestion, questionsAnswered, setRate }
         <div className = 'answer-section'>
           {
             currentQuestion.options && currentQuestion.options.map((option, index) => (
-              <Option className='option' option = {option} index = {index} setRate = {setRate} />
+              <Option className='option' option = {option} index = {index} setRateTheQuestion = {setRateTheQuestion} />
             ))
           }
         </div>
