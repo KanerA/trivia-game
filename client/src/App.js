@@ -4,30 +4,6 @@ import axios from 'axios';
 import Question from './components/Question';
 import RateQuestion from './components/RateQuestion';
 
-// function App() {
-//   const [question, setQuestion] = useState('');
-//   const [options, setOptions] = useState([]);
-
-//   const getData = async () => {
-//     const { data } = await axios.get('/quiz/question');
-//     console.log(data);
-//     setQuestion(data.question);
-//     setOptions(data.options)
-//   }
-
-//     useEffect(()=>{
-//       getData()
-//     }, []);
-    
-//   return (
-//     <div className="App">
-//       <Question question = {question} options = {options} />
-//     </div>
-//   );
-// }
-
-// export default App;
-
 export default function App() {
 	const [currentQuestion, setCurrentQuestion] = useState('');
 	const [questionsAnswered, setQuestionsAnswered] = useState(0);
@@ -48,7 +24,7 @@ export default function App() {
 		let { data } = await axios.get('/quiz/question');
 		setCurrentQuestion(data);
 	};
-
+	
 	const handleAnswerOptionClick = (answerOption) => {
 		if (strikes === 2) setShowScore(true);
 
