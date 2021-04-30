@@ -14,8 +14,6 @@ export default function App() {
 	const [userId, setUserId] = useState(null);
 	const userRating = useRef(null);
 
-	let ratingOption;
-
 	useEffect(()=>{
 		getQuestion()
 	}, []);
