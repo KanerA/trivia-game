@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 
-export default function Option({option, index, setRateTheQuestion}) {
+export default function Option({option, index, setUserAnswer}) {
   return (
     <div key = {`option-${index}`}>
-      <button className='option' onClick={() => setRateTheQuestion(true)}>{option}</button>
+      <button className='option' onClick={() => setUserAnswer(option)}>{option}</button>
     </div>
   );
 }
