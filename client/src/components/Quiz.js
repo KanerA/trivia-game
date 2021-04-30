@@ -2,7 +2,8 @@ import React from 'react';
 import Question from './Question';
 import RateQuestion from './RateQuestion';
 
-function Quiz() {
+function Quiz({ questionsAnswered, score, currentQuestion, setUserAnswer, onClick, userRating, showScore, userAnswer }) {
+    
     return (
         <div className='app'>
 			{showScore ? (
@@ -12,7 +13,7 @@ function Quiz() {
 			) : userAnswer ? 
 			<>	
 				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
-				<RateQuestion onClick = {handleAnswerRateQuestion} userRating = {userRating} />
+				<RateQuestion onClick = {onClick} userRating = {userRating} />
 		 	</>
 			: (
 				<>
