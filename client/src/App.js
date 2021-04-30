@@ -13,8 +13,9 @@ export default function App() {
 	const [strikes, setStrikes] = useState(0);
 	const [userAnswer, setUserAnswer] = useState(null);
 	const [userId, setUserId] = useState(null);
-	const [user, setUser] = useState(true);
 	const userRating = useRef(null);
+	const userName = useRef('');
+	const userPassword = useRef('');
 
 	useEffect(()=>{
 		getQuestion()
@@ -62,11 +63,21 @@ export default function App() {
 
 	};
 
+	const onUserNameChange = (evt) => {
+		userName.current = evt.target.value;
+	};
+
+	const onPasswordChange = (evt) => {
+		userPassword.current = evt.target.value;
+	};
+
 	return (
 		<>
 		<Router>
       <Switch>
-        <Route path = '/' exact component = {Login} />
+        <Route path = '/' exact>
+			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} />
+		</Route>
         <Route path = '/quiz' exact>
 			<Quiz 
 				questionsAnswered = {questionsAnswered}
