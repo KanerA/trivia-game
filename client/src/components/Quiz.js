@@ -2,13 +2,14 @@ import React from 'react';
 import Question from './Question';
 import RateQuestion from './RateQuestion';
 
-function Quiz({ questionsAnswered, score, currentQuestion, setUserAnswer, onClick, userRating, showScore, userAnswer }) {
+function Quiz({ questionsAnswered, correctAnswers, score,  currentQuestion, setUserAnswer, onClick, userRating, showScore, userAnswer }) {
     
     return (
         <div className='app'>
 			{showScore ? (
 				<div className='score-section'>
-					You scored {score} out of {questionsAnswered}
+					You scored {correctAnswers} out of {questionsAnswered}
+					{`& got ${score} points`}
 				</div>
 			) : userAnswer ? 
 			<>	
