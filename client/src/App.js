@@ -41,6 +41,24 @@ export default function App() {
 
 		if(!isRate || !userRating.current) return getQuestion();
 
+		const userObject = {
+			id: userId,
+			name: 'Assaf',
+			score,
+		};
+		const savedQuestion = {
+			question: currentQuestion.question,
+			option_1: currentQuestion.options[0],
+			option_2: currentQuestion.options[1],
+			option_3: currentQuestion.options[2],
+			option_4: currentQuestion.options[3],
+			answer: currentQuestion.answer,
+			rating: userRating.current,
+		}
+		const userResponse = await axios.post('/quiz/user', userObject);
+		await axios.post('/quiz/question/rate', savedQuestion);
+		setUserId(userResponse.data.id);
+		getQuestion();
 
 	};
 
