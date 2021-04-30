@@ -127,7 +127,8 @@ const saveRatedQuestion = async (req, res) => {
 }
 
 const createUser = async (req, res) => {  // ----------- POST - /quiz/user
-    const { body } = req;    
+    const { body } = req;
+    if(!body.name) return res.status(400).json({message: 'no name was specified'})
     const user = await users.create({
         name: body.name,
         score: 0,
