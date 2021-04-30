@@ -78,6 +78,9 @@ export default function App() {
         <Route path = '/' exact>
 			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} />
 		</Route>
+		<Route path = '/signup'>
+			
+		</Route>
         <Route path = '/quiz' exact>
 			<Quiz 
 				questionsAnswered = {questionsAnswered}
