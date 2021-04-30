@@ -1,8 +1,9 @@
 import React from 'react';
 
-function RateOption({ option, onRateOptionClick }) {
+function RateOption({ option, userRating }) {
+    console.log(userRating);
     return (
-        <div className = 'rateOption' onClick = {onRateOptionClick}>
+        <div className = 'rateOption' onClick = {() => userRating = option}>
             {option}
         </div>
     )

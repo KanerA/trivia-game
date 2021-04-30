@@ -5,7 +5,7 @@ const rateOptions = [
     1,2,3,4,5
 ]
 
-function RateQuestion({onRateClick, onSkipClick, onRateOptionClick}) {
+function RateQuestion({onRateClick, onSkipClick, userRating}) {
     return (
         <div className = 'rateQuestion'>
             <div className = 'rateTitle'>
@@ -14,7 +14,7 @@ function RateQuestion({onRateClick, onSkipClick, onRateOptionClick}) {
             <div className = 'rateOptions'>
                 {
                     rateOptions.map(option => (
-                        <RateOption option = {option} onClick = {() => onRateOptionClick(option)} />
+                        <RateOption option = {option} onClick = {userRating} />
                     ))
                 }
             </div>
