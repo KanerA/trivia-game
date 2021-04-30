@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
 import Quiz from './components/Quiz';
+import Login from './components/Login';
 
 export default function App() {
 	const [currentQuestion, setCurrentQuestion] = useState('');
@@ -66,7 +67,18 @@ export default function App() {
 		<Router>
       <Switch>
         <Route path = '/' exact component = {Login} />
-        <Route path = '/quiz' exact component = {Quiz} />
+        <Route path = '/quiz' exact>
+			<Quiz 
+				questionsAnswered = {questionsAnswered}
+				score = {score}	
+				currentQuestion = {currentQuestion}
+				setUserAnswer = {setUserAnswer}
+				onClick = {handleAnswerRateQuestion}
+				userRating = {userRating}
+				showScore = {showScore}
+				userAnswer = {userAnswer}
+			/>
+		</Route>
       </Switch>
     </Router>
 		</>
