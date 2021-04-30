@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
-import Question from './components/Question';
-import RateQuestion from './components/RateQuestion';
+import Quiz from './components/Quiz';
 
 export default function App() {
 	const [currentQuestion, setCurrentQuestion] = useState('');
@@ -12,6 +12,7 @@ export default function App() {
 	const [strikes, setStrikes] = useState(0);
 	const [userAnswer, setUserAnswer] = useState(null);
 	const [userId, setUserId] = useState(null);
+	const [user, setUser] = useState(true);
 	const userRating = useRef(null);
 
 	useEffect(()=>{
@@ -61,21 +62,13 @@ export default function App() {
 	};
 
 	return (
-		<div className='app'>
-			{showScore ? (
-				<div className='score-section'>
-					You scored {score} out of {questionsAnswered}
-				</div>
-			) : userAnswer ? 
-			<>	
-				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
-				<RateQuestion onClick = {handleAnswerRateQuestion} userRating = {userRating} />
-		 	</>
-			: (
-				<>
-					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
- 				</>
-			)}
-		</div>
+		<>
+		<Router>
+      <Switch>
+        <Route path = '/' exact component = {Login} />
+        <Route path = '/quiz' exact component = {Quiz} />
+      </Switch>
+    </Router>
+		</>
 	);
 }
