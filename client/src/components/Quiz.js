@@ -16,10 +16,10 @@ function Quiz({ questionsAnswered, correctAnswers, score,  currentQuestion, setU
 				<RateQuestion onClick = {onClick} userRating = {userRating} />
 		 	</>
 			: (
-				<>
-					<UserScore score = {score} correctAnswers = {correctAnswers} questionsAnswered = {questionsAnswered} />
-					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
- 				</>
+			<>
+				<UserScore score = {score} correctAnswers = {correctAnswers} questionsAnswered = {questionsAnswered} />
+				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
+			</>
 			)}
 		</div>
     );
