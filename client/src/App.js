@@ -26,7 +26,6 @@ export default function App() {
 	async function getQuestion(){
 		let { data } = await axios.get('/quiz/question');
 		setCurrentQuestion(data);
-		console.log(data.answer);
 	};
 
 	const handleAnswerRateQuestion = async (isRate) => {
@@ -77,6 +76,7 @@ export default function App() {
 			password: userPassword.current,
 		});
 		setUserId(res.data.id);
+		localStorage.setItem('password', res.data.password);
 	};
 
 	return (
