@@ -134,6 +134,12 @@ const saveRatedQuestion = async (req, res) => {
 const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     const { body } = req;
     if(!body.name) return res.status(400).json({ message: 'no name was specified' });
+    const isExist = await User.findOne({
+        where: {
+            name: body.name
+        }
+    })
+    if(isExist) return res.status(200).json({ message: 'Name already exist'});
     const hashedPW = hashSync(body.password, 10);
     const user = await User.create({
         name: body.name,
@@ -148,7 +154,7 @@ const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
         expiresIn: '10m'
     });
-    res.status(200).json({accessToken, refreshToken});
+    res.status(201).json({accessToken, refreshToken});
 }
 
 const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=userID
@@ -164,4 +170,4 @@ const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=use
     res.json(updatedUser);
 };
 
-module.exports = { getQuestion, saveRatedQuestion, createUser, updateUserScore };
+module.exports = { getQuestion, saveRatedQuestion, createUser, updateUserScore, userLogin };
