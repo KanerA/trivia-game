@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import './App.css';
 import axios from 'axios';
-import Question from './components/Question';
-import RateQuestion from './components/RateQuestion';
+import Quiz from './components/Quiz';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 
 export default function App() {
 	const [currentQuestion, setCurrentQuestion] = useState('');
@@ -12,37 +14,44 @@ export default function App() {
 	const [strikes, setStrikes] = useState(0);
 	const [userAnswer, setUserAnswer] = useState(null);
 	const [userId, setUserId] = useState(null);
+	const [correctAnswers, setCorrectAnswers] = useState(0);
+	const [userExist, setUserExist] = useState(false);
+	const [loginError, setLoginError] = useState(false);
 	const userRating = useRef(null);
+	const userName = useRef('');
+	const userPassword = useRef('');
 
 	useEffect(()=>{
 		getQuestion()
 	}, []);
 
 	async function getQuestion(){
-		let { data } = await axios.get('/quiz/question');
+		let { data } = await axios.get('/quiz/question', {
+			headers: {
+				'authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+			}
+		});
 		setCurrentQuestion(data);
-	};
-
-	const createUser = async () => {
-
 	};
 
 	const handleAnswerRateQuestion = async (isRate) => {
 		if (userAnswer === currentQuestion.answer) {
-			setScore(score + 1);
+			setScore(score + 100);
+			setCorrectAnswers(correctAnswers + 1);
 		} else setStrikes(strikes + 1);
-
-		setQuestionsAnswered(questionsAnswered + 1);
+		
 		setUserAnswer(null);
 		if (strikes === 3) return setShowScore(true);
-
-		if(!isRate || !userRating.current) return getQuestion();
-
+		setQuestionsAnswered(questionsAnswered + 1);
+		
 		const userObject = {
 			id: userId,
-			name: 'Assaf',
+			name: userName,
 			score,
 		};
+		
+		if(!isRate || !userRating.current) return getQuestion();
+		
 		const savedQuestion = {
 			question: currentQuestion.question,
 			option_1: currentQuestion.options[0],
@@ -52,29 +61,90 @@ export default function App() {
 			answer: currentQuestion.answer,
 			rating: userRating.current,
 		}
-		const userResponse = await axios.post('/quiz/user', userObject);
 		await axios.post('/quiz/question/rate', savedQuestion);
+		const userResponse = await axios.patch('/quiz/user', userObject);
 		setUserId(userResponse.data.id);
 		getQuestion();
 
 	};
 
+	const onUserNameChange = (evt) => {
+		userName.current = evt.target.value;
+	};
+
+	const onPasswordChange = (evt) => {
+		userPassword.current = evt.target.value;
+	};
+
+	const userSignUp = async () => {
+		try{
+			const res = await axios.post('/quiz/user/signup', {
+				name: userName.current,
+				password: userPassword.current,
+			});
+			if(res.status === 200) return setUserExist(true);
+			setUserId(res.data.id);
+			localStorage.setItem('accessToken', res.data.accessToken);
+			localStorage.setItem('refreshToken', res.data.refreshToken);
+			document.location.pathname = '/trivia';
+		} catch (err){
+			console.log(err);
+		}
+	};
+
+	const userLogin = async () => {
+		try{
+			const res = await axios.post('/quiz/user/login', {
+				name: userName.current,
+				password: userPassword.current,
+			}, {
+				headers: {
+					'authorization': 'Bearer ' + localStorage.accessToken,
+				}
+			});
+			if(res.status === 201) return setLoginError(true);
+			setUserId(res.data.id);
+			localStorage.setItem('accessToken', res.data.accessToken);
+			localStorage.setItem('refreshToken', res.data.refreshToken);
+			document.location.pathname = '/trivia';
+		} catch(err) {
+			console.log(err);
+			setLoginError(true);
+		}
+	};
+
 	return (
-		<div className='app'>
-			{showScore ? (
-				<div className='score-section'>
-					You scored {score} out of {questionsAnswered}
-				</div>
-			) : userAnswer ? 
-			<>	
-				<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
-				<RateQuestion onClick = {handleAnswerRateQuestion} userRating = {userRating} />
-		 	</>
-			: (
-				<>
-					<Question currentQuestion = {currentQuestion} questionsAnswered = {questionsAnswered} setUserAnswer = {setUserAnswer} />
- 				</>
-			)}
-		</div>
+		<>
+		<Router>
+      <Switch>
+        <Route path = '/' exact>
+			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} onClick = {userLogin} loginError = {loginError} setLoginError = {setLoginError} />
+		</Route>
+		<Route path = '/signup' exact>
+			<SignUp 
+				onClick = {userSignUp}
+				onUserNameChange = {onUserNameChange}
+				onPasswordChange = {onPasswordChange}
+				userExist = {userExist}
+				setUserExist = {setUserExist}
+			/>
+		</Route>
+        <Route path = '/trivia' exact>
+			<Quiz 
+				questionsAnswered = {questionsAnswered}
+				correctAnswers = {correctAnswers}
+				score = {score}
+				currentQuestion = {currentQuestion}
+				setUserAnswer = {setUserAnswer}
+				onClick = {handleAnswerRateQuestion}
+				userRating = {userRating}
+				showScore = {showScore}
+				userAnswer = {userAnswer}
+				player = {userName.current}
+			/>
+		</Route>
+      </Switch>
+    </Router>
+		</>
 	);
 }

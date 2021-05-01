@@ -1,6 +1,11 @@
+require('dotenv').config();
 const { Op } = require('sequelize');
-const { country, question, saved_question, users } = require('./models');
+const { country, question, saved_question, User } = require('./models');
 const sequelize = require('sequelize');
+const jwt = require('jsonwebtoken');
+const { hashSync, compare } = require('bcrypt');
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
 const getQuestion = async (req, res) => {
     const result = await question.findOne({
@@ -126,14 +131,55 @@ const saveRatedQuestion = async (req, res) => {
     }
 }
 
+const userLogin = async (req, res) => {
+    const {name, password} = req.body;
+    const user = await User.findOne({
+        where: {
+            name: name
+        }
+    });
+    if(!user) return res.status(201).json({message: 'User doesn\'t exist, please sign up'})
+    const isPasswordCorrect = await compare(password, user.password);
+    if(!isPasswordCorrect) return res.sendStatus(403);
+    const payload = {
+        name: user.name,
+        password: user.password,
+    }
+    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET);
+    const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
+        expiresIn: '10m'
+    });
+    res.json({
+        accessToken,
+        refreshToken,
+        id: user.id,
+    });
+}
+
 const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     const { body } = req;
-    if(!body.name) return res.status(400).json({message: 'no name was specified'})
-    const user = await users.create({
+    if(!body.name) return res.status(400).json({ message: 'no name was specified' });
+    const isExist = await User.findOne({
+        where: {
+            name: body.name
+        }
+    })
+    if(isExist) return res.status(200).json({ message: 'Name already exist'});
+    const hashedPW = hashSync(body.password, 10);
+    const user = await User.create({
         name: body.name,
+        password: hashedPW,
         score: 0,
     });
-    res.send(user);
+    const payload = {
+        name: user.name,
+        password: user.password,
+    }
+    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET);
+    const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
+        expiresIn: '10m'
+    });
+    res.status(201).json({accessToken, refreshToken});
 }
 
 const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=userID
@@ -149,4 +195,4 @@ const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=use
     res.json(updatedUser);
 };
 
-module.exports = { getQuestion, saveRatedQuestion, createUser, updateUserScore };
+module.exports = { getQuestion, saveRatedQuestion, createUser, updateUserScore, userLogin };
