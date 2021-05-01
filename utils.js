@@ -131,6 +131,31 @@ const saveRatedQuestion = async (req, res) => {
     }
 }
 
+const userLogin = async (req, res) => {
+    const {name, password} = req.body;
+    const user = await User.findOne({
+        where: {
+            name: name
+        }
+    });
+    if(!user) return res.status(201).json({message: 'User doesn\'t exist, please sign up'})
+    const isPasswordCorrect = await compare(password, user.password);
+    if(!isPasswordCorrect) return res.sendStatus(403);
+    const payload = {
+        name: user.name,
+        password: user.password,
+    }
+    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET);
+    const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
+        expiresIn: '10m'
+    });
+    res.json({
+        accessToken,
+        refreshToken,
+        id: user.id,
+    });
+}
+
 const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     const { body } = req;
     if(!body.name) return res.status(400).json({ message: 'no name was specified' });
