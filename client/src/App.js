@@ -23,10 +23,6 @@ export default function App() {
 		setCurrentQuestion(data);
 	};
 
-	const createUser = async () => {
-
-	};
-
 	const handleAnswerRateQuestion = async (isRate) => {
 		if (userAnswer === currentQuestion.answer) {
 			setScore(score + 1);
