@@ -13,7 +13,7 @@ export default function App() {
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
 	const [userAnswer, setUserAnswer] = useState(null);
-	const [userId, setUserId] = useState(null);
+	const [userId, setUserId] = useState(0);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [userExist, setUserExist] = useState(false);
 	const [loginError, setLoginError] = useState(false);
@@ -43,12 +43,13 @@ export default function App() {
 		setUserAnswer(null);
 		if (strikes === 3) return setShowScore(true);
 		setQuestionsAnswered(questionsAnswered + 1);
-		
 		const userObject = {
 			id: userId,
-			name: userName,
+			name: userName.current,
 			score,
 		};
+		const userResponse = await axios.patch('/quiz/user', userObject);
+		setUserId(userResponse.data.id);
 		
 		if(!isRate || !userRating.current) return getQuestion();
 		
@@ -62,8 +63,6 @@ export default function App() {
 			rating: userRating.current,
 		}
 		await axios.post('/quiz/question/rate', savedQuestion);
-		const userResponse = await axios.patch('/quiz/user', userObject);
-		setUserId(userResponse.data.id);
 		getQuestion();
 
 	};
