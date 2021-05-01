@@ -16,6 +16,8 @@ export default function App() {
 	const [userId, setUserId] = useState(null);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [userExist, setUserExist] = useState(false);
+	const [userLoggedIn, setUserLoggedIn] = useState(false);
+	const [loginError, setLoginError] = useState(false);
 	const userRating = useRef(null);
 	const userName = useRef('');
 	const userPassword = useRef('');
@@ -91,12 +93,34 @@ export default function App() {
 		}
 	};
 
+	const userLogin = async () => {
+		try{
+			const res = await axios.post('/quiz/user/login', {
+				name: userName.current,
+				password: userPassword.current,
+			}, {
+				headers: {
+					'authorization': 'Bearer ' + localStorage.accessToken,
+				}
+			});
+			if(res.status === 201) return setLoginError(true);
+			setUserId(res.data.id);
+			setUserLoggedIn(true);
+			localStorage.setItem('accessToken', res.data.accessToken);
+			localStorage.setItem('refreshToken', res.data.refreshToken);
+			document.location.pathname = '/trivia';
+		} catch(err) {
+			console.log(err);
+			setLoginError(true);
+		}
+	};
+
 	return (
 		<>
 		<Router>
       <Switch>
         <Route path = '/' exact>
-			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} onClick = {userLogin} />
+			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} onClick = {userLogin} loginError = {loginError} setLoginError = {setLoginError} />
 		</Route>
 		<Route path = '/signup' exact>
 			<SignUp 
