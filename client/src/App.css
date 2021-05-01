@@ -9,6 +9,9 @@ body {
     display: flex;
     flex-direction: column;
     font-family: 'Antonio', sans-serif;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15%;
 }
 
 .app {
@@ -35,4 +38,13 @@ body {
 
 .rateOption:hover {
     cursor: pointer;
+}
+
+.loginContainer,
+.signUpContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40%;
 }
