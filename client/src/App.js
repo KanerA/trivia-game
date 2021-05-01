@@ -24,7 +24,11 @@ export default function App() {
 	}, []);
 
 	async function getQuestion(){
-		let { data } = await axios.get('/quiz/question');
+		let { data } = await axios.get('/quiz/question', {
+			headers: {
+				'authorization': 'Bearer ' + localStorage.getItem('accessToken'),
+			}
+		});
 		setCurrentQuestion(data);
 	};
 
