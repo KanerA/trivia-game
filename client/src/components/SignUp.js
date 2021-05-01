@@ -1,7 +1,12 @@
 import React from 'react';
 
-function SignUp({onClick, onUserNameChange, onPasswordChange}) {
-    return (
+function SignUp({onClick, onUserNameChange, onPasswordChange, userExist, setUserExist}) {
+    return (userExist ?
+        <div className = 'nameError'>
+            The name entered already exists
+            <button onClick = {() => setUserExist(false)}>sign up</button>
+        </div> 
+    :
         <div className = 'signUpContainer container'>
             <div className = 'userName'>
                 <label>Name:</label>
