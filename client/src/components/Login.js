@@ -16,7 +16,7 @@ function Login({onPasswordChange, onUserNameChange}) {
                 <button>Login</button>
                 <Link to ='/signup'><button>Sign-up</button></Link>
             </div>
-            <Link to = '/quiz'>Quiz</Link>
+            <Link to = '/trivia'>Quiz</Link>
         </>
     );
 }
