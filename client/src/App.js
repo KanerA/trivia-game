@@ -15,6 +15,7 @@ export default function App() {
 	const [userAnswer, setUserAnswer] = useState(null);
 	const [userId, setUserId] = useState(null);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
+	const [userExist, setUserExist] = useState(false);
 	const userRating = useRef(null);
 	const userName = useRef('');
 	const userPassword = useRef('');
@@ -80,6 +81,7 @@ export default function App() {
 				name: userName.current,
 				password: userPassword.current,
 			});
+			if(res.status === 200) return setUserExist(true);
 			setUserId(res.data.id);
 			localStorage.setItem('accessToken', res.data.accessToken);
 			localStorage.setItem('refreshToken', res.data.refreshToken);
@@ -94,13 +96,15 @@ export default function App() {
 		<Router>
       <Switch>
         <Route path = '/' exact>
-			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} />
+			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} onClick = {userLogin} />
 		</Route>
 		<Route path = '/signup' exact>
 			<SignUp 
 				onClick = {userSignUp}
 				onUserNameChange = {onUserNameChange}
 				onPasswordChange = {onPasswordChange}
+				userExist = {userExist}
+				setUserExist = {setUserExist}
 			/>
 		</Route>
         <Route path = '/trivia' exact>
