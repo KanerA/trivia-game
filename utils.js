@@ -1,8 +1,11 @@
+require('dotenv').config();
 const { Op } = require('sequelize');
 const { country, question, saved_question, User } = require('./models');
 const sequelize = require('sequelize');
 const jwt = require('jsonwebtoken');
 const { hashSync, compare } = require('bcrypt');
+const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
+const REFRESH_TOKEN_SECRET = process.env.REFRESH_TOKEN_SECRET;
 
 const getQuestion = async (req, res) => {
     const result = await question.findOne({
@@ -137,7 +140,15 @@ const createUser = async (req, res) => {  // ----------- POST - /quiz/user
         password: hashedPW,
         score: 0,
     });
-    res.send(user);
+    const payload = {
+        name: user.name,
+        password: user.password,
+    }
+    const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET);
+    const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
+        expiresIn: '10s'
+    });
+    res.status(200).json({accessToken, refreshToken});
 }
 
 const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=userID
