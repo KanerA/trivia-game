@@ -71,12 +71,18 @@ export default function App() {
 	};
 
 	const userSignUp = async () => {
-		const res = await axios.post('/quiz/user/signup', {
-			name: userName.current,
-			password: userPassword.current,
-		});
-		setUserId(res.data.id);
-		localStorage.setItem('password', res.data.password);
+		try{
+			const res = await axios.post('/quiz/user/signup', {
+				name: userName.current,
+				password: userPassword.current,
+			});
+			setUserId(res.data.id);
+			localStorage.setItem('accessToken', res.data.accessToken);
+			localStorage.setItem('refreshToken', res.data.refreshToken);
+			document.location.pathname = '/trivia';
+		} catch (err){
+			console.log(err);
+		}
 	};
 
 	return (
@@ -86,14 +92,14 @@ export default function App() {
         <Route path = '/' exact>
 			<Login onUserNameChange = {onUserNameChange} onPasswordChange = {onPasswordChange} />
 		</Route>
-		<Route path = '/signup'>
+		<Route path = '/signup' exact>
 			<SignUp 
 				onClick = {userSignUp}
 				onUserNameChange = {onUserNameChange}
 				onPasswordChange = {onPasswordChange}
 			/>
 		</Route>
-        <Route path = '/quiz' exact>
+        <Route path = '/trivia' exact>
 			<Quiz 
 				questionsAnswered = {questionsAnswered}
 				correctAnswers = {correctAnswers}
@@ -104,6 +110,7 @@ export default function App() {
 				userRating = {userRating}
 				showScore = {showScore}
 				userAnswer = {userAnswer}
+				player = {userName.current}
 			/>
 		</Route>
       </Switch>
