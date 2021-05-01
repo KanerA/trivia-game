@@ -16,7 +16,6 @@ export default function App() {
 	const [userId, setUserId] = useState(null);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [userExist, setUserExist] = useState(false);
-	const [userLoggedIn, setUserLoggedIn] = useState(false);
 	const [loginError, setLoginError] = useState(false);
 	const userRating = useRef(null);
 	const userName = useRef('');
@@ -105,7 +104,6 @@ export default function App() {
 			});
 			if(res.status === 201) return setLoginError(true);
 			setUserId(res.data.id);
-			setUserLoggedIn(true);
 			localStorage.setItem('accessToken', res.data.accessToken);
 			localStorage.setItem('refreshToken', res.data.refreshToken);
 			document.location.pathname = '/trivia';
