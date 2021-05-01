@@ -74,6 +74,7 @@ export default function App() {
 	const userSignUp = async () => {
 		const res = await axios.post('/quiz/user/signup', {
 			name: userName.current,
+			password: userPassword.current,
 		});
 		setUserId(res.data.id);
 	};

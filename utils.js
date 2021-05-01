@@ -1,6 +1,8 @@
 const { Op } = require('sequelize');
-const { country, question, saved_question, users } = require('./models');
+const { country, question, saved_question, User } = require('./models');
 const sequelize = require('sequelize');
+const jwt = require('jsonwebtoken');
+const { hashSync, compare } = require('bcrypt');
 
 const getQuestion = async (req, res) => {
     const result = await question.findOne({
@@ -128,9 +130,11 @@ const saveRatedQuestion = async (req, res) => {
 
 const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     const { body } = req;
-    if(!body.name) return res.status(400).json({message: 'no name was specified'})
-    const user = await users.create({
+    if(!body.name) return res.status(400).json({ message: 'no name was specified' });
+    const hashedPW = hashSync(body.password, 10);
+    const user = await User.create({
         name: body.name,
+        password: hashedPW,
         score: 0,
     });
     res.send(user);
