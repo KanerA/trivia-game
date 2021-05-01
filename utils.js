@@ -146,7 +146,7 @@ const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     }
     const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET);
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
-        expiresIn: '10s'
+        expiresIn: '10m'
     });
     res.status(200).json({accessToken, refreshToken});
 }
