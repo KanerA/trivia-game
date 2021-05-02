@@ -22,7 +22,6 @@ function Login({onPasswordChange, onUserNameChange, onClick, loginError, setLogi
                     <button onClick = {onClick}>Login</button>
                     <Link to ='/signup'><button>Sign-up</button></Link>
                 </div>
-                <Link to = '/trivia'>Quiz</Link>
             </>
     );
 }
