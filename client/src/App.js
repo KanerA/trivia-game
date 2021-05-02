@@ -48,7 +48,12 @@ export default function App() {
 			name: userName.current,
 			score,
 		};
-		const userResponse = await axios.patch('/quiz/user', userObject);
+		const userResponse = await axios.patch('/quiz/user', userObject,{
+			headers: {
+				'authorization': 'Bearer ' + localStorage.accessToken,
+
+			}
+		});
 		setUserId(userResponse.data.id);
 		
 		if(!isRate || !userRating.current) return getQuestion();

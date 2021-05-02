@@ -5,6 +5,6 @@ const user = Router();
 
 user.post('/signup', createUser);
 user.post('/login', userLogin);
-user.patch('/', updateUserScore);
+user.patch('/', validateToken, updateUserScore);
 
 module.exports = user;
