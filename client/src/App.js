@@ -122,6 +122,15 @@ export default function App() {
 		}
 	};
 
+	const getScoreBoard = async () => {
+		const { data } = await axios.get('/quiz/user/usersinfo', {
+			headers: {
+				'authorization': 'Bearer ' + localStorage.accessToken,
+			}
+		});
+		setPlayers(data);
+	};
+
 	return (
 		<>
 		<Router>
