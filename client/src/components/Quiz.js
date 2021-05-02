@@ -1,14 +1,15 @@
 import React from 'react';
 import Question from './Question';
 import RateQuestion from './RateQuestion';
+import ScoreBoard from './ScoreBoard';
 import UserScore from './UserScore';
 
-function Quiz({ questionsAnswered, correctAnswers, score,  currentQuestion, setUserAnswer, onClick, userRating, showScore, userAnswer }) {
+function Quiz({ questionsAnswered, correctAnswers, score,  currentQuestion, setUserAnswer, onClick, userRating, userAnswer, scoreBoard, players }) {
     
     return (
         <div className='app'>
-			{showScore ? (
-				<UserScore score = {score} correctAnswers = {correctAnswers} questionsAnswered = {questionsAnswered} />
+			{scoreBoard ? (
+				<ScoreBoard players = {players} />
 			) : userAnswer ? 
 			<>
 				<UserScore score = {score} correctAnswers = {correctAnswers} questionsAnswered = {questionsAnswered} />
