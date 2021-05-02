@@ -205,6 +205,7 @@ const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=use
 const getAllUsers = async (req, res) => {
     const users = await User.findAll({
         attributes: ['name', 'score'],
+        order: [['score', 'DESC']]
     });
     res.json(users);
 };
