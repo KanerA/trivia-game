@@ -13,7 +13,6 @@ export default function App() {
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
 	const [userAnswer, setUserAnswer] = useState(null);
-	const [userId, setUserId] = useState(0);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [userExist, setUserExist] = useState(false);
 	const [loginError, setLoginError] = useState(false);
@@ -43,13 +42,20 @@ export default function App() {
 		setUserAnswer(null);
 		setQuestionsAnswered(questionsAnswered + 1);
 		if (strikes === 2) return setShowScore(true);
+		const userId = localStorage.getItem('userId');
 		const userObject = {
 			id: userId,
 			name: userName.current,
 			score,
 		};
-		
-		if(!isRate || !userRating.current) return getQuestion();
+		const userResponse = await axios.patch('/quiz/user', userObject,{
+			headers: {
+				'authorization': 'Bearer ' + localStorage.accessToken,
+			}
+		});	
+		if(!isRate || !userRating.current) {
+			return getQuestion();
+		}
 		
 		const savedQuestion = {
 			question: currentQuestion.question,
@@ -61,12 +67,6 @@ export default function App() {
 			rating: userRating.current,
 		}
 		await axios.post('/quiz/question/rate', savedQuestion);
-		const userResponse = await axios.patch('/quiz/user', userObject,{
-			headers: {
-				'authorization': 'Bearer ' + localStorage.accessToken,
-			}
-		});
-		setUserId(userResponse.data.id);
 		getQuestion();
 
 	};
@@ -86,7 +86,7 @@ export default function App() {
 				password: userPassword.current,
 			});
 			if(res.status === 200) return setUserExist(true);
-			setUserId(res.data.id);
+			localStorage.setItem('userId', res.data.id);
 			localStorage.setItem('accessToken', res.data.accessToken);
 			localStorage.setItem('refreshToken', res.data.refreshToken);
 			document.location.pathname = '/trivia';
@@ -106,7 +106,7 @@ export default function App() {
 				}
 			});
 			if(res.status === 201) return setLoginError(true);
-			setUserId(res.data.id);
+			localStorage.setItem('userId', res.data.id);
 			localStorage.setItem('accessToken', res.data.accessToken);
 			localStorage.setItem('refreshToken', res.data.refreshToken);
 			document.location.pathname = '/trivia';

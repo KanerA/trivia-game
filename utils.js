@@ -184,14 +184,21 @@ const createUser = async (req, res) => {  // ----------- POST - /quiz/user
 
 const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=userID
     const { body } = req;
-    const user = await User.findOne({
-        where: { id: body.id }
-    })
-    const userScore = user.dataValues.score + body.score;
-    const updatedUser = await users.update({ score: userScore }, {
-        where: { id }
-    })
-    res.json(updatedUser);
+    try{
+        const user = await User.findOne({
+            where: { id: body.id }
+        })
+        const userJson = await user.toJSON();
+        console.log(userJson);
+        const userScore = body.score;
+        const updatedUser = await User.update({ score: userScore }, {
+            where: { id: body.id }
+        })
+        res.json(updatedUser);
+    } catch (err) {
+        console.log(err);
+        res.sendStatus(500);
+    }
 };
 
 module.exports = { getQuestion, saveRatedQuestion, createUser, updateUserScore, userLogin };
