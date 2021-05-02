@@ -22,7 +22,7 @@ export default function App() {
 	const userPassword = useRef('');
 
 	useEffect(()=>{
-		getQuestion()
+		getQuestion();
 	}, []);
 
 	async function getQuestion(){
@@ -41,20 +41,13 @@ export default function App() {
 		} else setStrikes(strikes + 1);
 		
 		setUserAnswer(null);
-		if (strikes === 3) return setShowScore(true);
 		setQuestionsAnswered(questionsAnswered + 1);
+		if (strikes === 2) return setShowScore(true);
 		const userObject = {
 			id: userId,
 			name: userName.current,
 			score,
 		};
-		const userResponse = await axios.patch('/quiz/user', userObject,{
-			headers: {
-				'authorization': 'Bearer ' + localStorage.accessToken,
-
-			}
-		});
-		setUserId(userResponse.data.id);
 		
 		if(!isRate || !userRating.current) return getQuestion();
 		
@@ -68,6 +61,12 @@ export default function App() {
 			rating: userRating.current,
 		}
 		await axios.post('/quiz/question/rate', savedQuestion);
+		const userResponse = await axios.patch('/quiz/user', userObject,{
+			headers: {
+				'authorization': 'Bearer ' + localStorage.accessToken,
+			}
+		});
+		setUserId(userResponse.data.id);
 		getQuestion();
 
 	};
