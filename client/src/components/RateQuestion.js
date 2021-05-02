@@ -18,9 +18,9 @@ function RateQuestion({onClick, onSkipClick, userRating}) {
                     ))
                 }
             </div>
-            <div className = 'rateButton'>
-                <button onClick = {() => onClick(true)}>Rate!</button>
-                <button onClick = {() => onClick(false)}>Skip</button>
+            <div className = 'rateButtons'>
+                <button className = 'rateButton rate' onClick = {() => onClick(true)}>Rate!</button>
+                <button className = 'rateButton skip' onClick = {() => onClick(false)}>Skip</button>
             </div>
         </div>
     );
