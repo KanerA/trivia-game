@@ -87,3 +87,26 @@ button {
 .question-section {
     font-weight: 800;
 }
+
+.scoreBoard {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 400px;
+    color: white;
+    font-size: 30px;
+}
+
+.scoreBoardTitle,
+.scoreBoardUser {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.boardCell {
+    width: 50%;
+    margin: 5px 10px;
+    padding:0 10px;
+}
