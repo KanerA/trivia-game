@@ -9,13 +9,14 @@ import SignUp from './components/SignUp';
 export default function App() {
 	const [currentQuestion, setCurrentQuestion] = useState('');
 	const [questionsAnswered, setQuestionsAnswered] = useState(0);
-	const [showScore, setShowScore] = useState(false);
 	const [score, setScore] = useState(0);
 	const [strikes, setStrikes] = useState(0);
 	const [userAnswer, setUserAnswer] = useState(null);
 	const [correctAnswers, setCorrectAnswers] = useState(0);
 	const [userExist, setUserExist] = useState(false);
 	const [loginError, setLoginError] = useState(false);
+	const [scoreBoard, setScoreBoard] = useState(false);
+	const [players, setPlayers] = useState([]);
 	const userRating = useRef(null);
 	const userName = useRef('');
 	const userPassword = useRef('');
@@ -41,7 +42,6 @@ export default function App() {
 		
 		setUserAnswer(null);
 		setQuestionsAnswered(questionsAnswered + 1);
-		if (strikes === 2) return setShowScore(true);
 		const userId = localStorage.getItem('userId');
 		const userObject = {
 			id: userId,
@@ -52,7 +52,13 @@ export default function App() {
 			headers: {
 				'authorization': 'Bearer ' + localStorage.accessToken,
 			}
-		});	
+		});
+
+		if (strikes === 2){
+			getScoreBoard();
+			setScoreBoard(true);
+			return;
+		}
 		if(!isRate || !userRating.current) {
 			return getQuestion();
 		}
@@ -141,9 +147,10 @@ export default function App() {
 				setUserAnswer = {setUserAnswer}
 				onClick = {handleAnswerRateQuestion}
 				userRating = {userRating}
-				showScore = {showScore}
 				userAnswer = {userAnswer}
 				player = {userName.current}
+				scoreBoard = {scoreBoard}
+				players = {players}
 			/>
 		</Route>
       </Switch>
