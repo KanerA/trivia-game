@@ -179,7 +179,8 @@ const createUser = async (req, res) => {  // ----------- POST - /quiz/user
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
         expiresIn: '10m'
     });
-    res.status(201).json({accessToken, refreshToken});
+    const id = user.id;
+    res.status(201).json({accessToken, refreshToken, id});
 }
 
 const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=userID
@@ -201,4 +202,11 @@ const updateUserScore = async (req, res) => { //------ PATCH - /quiz/user?id=use
     }
 };
 
-module.exports = { getQuestion, saveRatedQuestion, createUser, updateUserScore, userLogin };
+const getAllUsers = async (req, res) => {
+    const users = await User.findAll({
+        attributes: ['name', 'score'],
+    });
+    res.json(users);
+};
+
+module.exports = { getQuestion, saveRatedQuestion, createUser, updateUserScore, userLogin, getAllUsers };
