@@ -7,9 +7,9 @@ function ScoreBoard({ players }) {
         <div className = 'scoreBoard'>
             <ScoreBoardTitle />
             {
-                players.map((player, index) => {
-                    <ScoreBoardUser playerScore = {player.score} playerName = {player.name} />
-                })
+                players&&players.map((player, index) => (
+                    <ScoreBoardUser score = {player.score} name = {player.name} index = {index} />
+                ))
             }
         </div>
     );

@@ -1,9 +1,10 @@
 import React from 'react';
 
-function ScoreBoardUser(props) {
+function ScoreBoardUser({name, score}) {
     return (
         <div className = 'scoreBoardUser'>
-            
+            <div className = 'playerName'>{name}</div>
+            <div className = 'playerScore'>{score}</div>
         </div>
     );
 }
