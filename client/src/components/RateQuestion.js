@@ -5,7 +5,7 @@ const rateOptions = [
     1,2,3,4,5
 ]
 
-function RateQuestion({onClick, onSkipClick, userRating}) {
+function RateQuestion({onClick, userRating}) {
     return (
         <div className = 'rateQuestion'>
             <div className = 'rateTitle'>
