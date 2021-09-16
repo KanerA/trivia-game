@@ -141,43 +141,46 @@ export default function App() {
 
   return (
     <>
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Login
-              onUserNameChange={onUserNameChange}
-              onPasswordChange={onPasswordChange}
-              onClick={userLogin}
-              loginError={loginError}
-              setLoginError={setLoginError}
-            />
-          </Route>
-          <Route path="/signup" exact>
-            <SignUp
-              onClick={userSignUp}
-              onUserNameChange={onUserNameChange}
-              onPasswordChange={onPasswordChange}
-              userExist={userExist}
-              setUserExist={setUserExist}
-            />
-          </Route>
-          <Route path="/trivia" exact>
-            <Quiz
-              questionsAnswered={questionsAnswered}
-              correctAnswers={correctAnswers}
-              score={score}
-              currentQuestion={currentQuestion}
-              setUserAnswer={setUserAnswer}
-              onClick={handleAnswerRateQuestion}
-              userRating={userRating}
-              userAnswer={userAnswer}
-              player={userName.current}
-              scoreBoard={scoreBoard}
-              players={players}
-            />
-          </Route>
-        </Switch>
-      </Router>
+      <h1>Trivia game</h1>
+      <div className="container">
+        <Router>
+          <Switch>
+            <Route path="/" exact>
+              <Login
+                onUserNameChange={onUserNameChange}
+                onPasswordChange={onPasswordChange}
+                onClick={userLogin}
+                loginError={loginError}
+                setLoginError={setLoginError}
+              />
+            </Route>
+            <Route path="/signup" exact>
+              <SignUp
+                onClick={userSignUp}
+                onUserNameChange={onUserNameChange}
+                onPasswordChange={onPasswordChange}
+                userExist={userExist}
+                setUserExist={setUserExist}
+              />
+            </Route>
+            <Route path="/trivia" exact>
+              <Quiz
+                questionsAnswered={questionsAnswered}
+                correctAnswers={correctAnswers}
+                score={score}
+                currentQuestion={currentQuestion}
+                setUserAnswer={setUserAnswer}
+                onClick={handleAnswerRateQuestion}
+                userRating={userRating}
+                userAnswer={userAnswer}
+                player={userName.current}
+                scoreBoard={scoreBoard}
+                players={players}
+              />
+            </Route>
+          </Switch>
+        </Router>
+      </div>
     </>
   );
 }

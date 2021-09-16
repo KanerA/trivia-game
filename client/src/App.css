@@ -10,7 +10,7 @@ body {
   font-family: "Antonio", sans-serif;
   justify-content: center;
   align-items: center;
-  margin-top: 15%;
+  margin-top: 5%;
   font-size: 25px;
   font-weight: 600;
 }
@@ -109,4 +109,9 @@ button {
   width: 50%;
   margin: 5px 10px;
   padding: 0 10px;
+}
+
+.optionSelected {
+  background-color: rgba(28, 31, 192, 0.534);
+  color: white;
 }
