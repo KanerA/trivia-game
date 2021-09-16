@@ -1,6 +1,6 @@
 require("dotenv").config();
 const { Op } = require("sequelize");
-const { country, question, saved_question, User } = require("./models");
+const { country, question, saved_question, user } = require("./models");
 const sequelize = require("sequelize");
 const jwt = require("jsonwebtoken");
 const { hashSync, compare } = require("bcrypt");
@@ -150,20 +150,20 @@ const saveRatedQuestion = async (req, res) => {
 
 const userLogin = async (req, res) => {
   const { name, password } = req.body;
-  const user = await User.findOne({
+  const loggedUser = await user.findOne({
     where: {
       name: name,
     },
   });
-  if (!user)
+  if (!loggedUser)
     return res
       .status(201)
       .json({ message: "User doesn't exist, please sign up" });
-  const isPasswordCorrect = await compare(password, user.password);
+  const isPasswordCorrect = await compare(password, loggedUser.password);
   if (!isPasswordCorrect) return res.sendStatus(403);
   const payload = {
-    name: user.name,
-    password: user.password,
+    name: loggedUser.name,
+    password: loggedUser.password,
   };
   const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET);
   const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
@@ -172,7 +172,7 @@ const userLogin = async (req, res) => {
   res.json({
     accessToken,
     refreshToken,
-    id: user.id,
+    id: loggedUser.id,
   });
 };
 
@@ -181,27 +181,27 @@ const createUser = async (req, res) => {
   const { body } = req;
   if (!body.name)
     return res.status(400).json({ message: "no name was specified" });
-  const isExist = await User.findOne({
+  const isExist = await user.findOne({
     where: {
       name: body.name,
     },
   });
   if (isExist) return res.status(200).json({ message: "Name already exist" });
   const hashedPW = hashSync(body.password, 10);
-  const user = await User.create({
+  const newUser = await user.create({
     name: body.name,
     password: hashedPW,
     score: 0,
   });
   const payload = {
-    name: user.name,
-    password: user.password,
+    name: newUser.name,
+    password: newUser.password,
   };
   const refreshToken = jwt.sign(payload, REFRESH_TOKEN_SECRET);
   const accessToken = jwt.sign(payload, ACCESS_TOKEN_SECRET, {
     expiresIn: "10m",
   });
-  const id = user.id;
+  const id = newUser.id;
   res.status(201).json({ accessToken, refreshToken, id });
 };
 
@@ -210,7 +210,7 @@ const updateUserScore = async (req, res) => {
   const { body } = req;
   try {
     const userScore = body.score;
-    const updatedUser = await User.update(
+    const updatedUser = await user.update(
       { score: userScore },
       {
         where: { id: body.id },
@@ -224,7 +224,7 @@ const updateUserScore = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const users = await User.findAll({
+  const users = await user.findAll({
     attributes: ["name", "score"],
     order: [["score", "DESC"]],
   });
