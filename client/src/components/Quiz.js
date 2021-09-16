@@ -16,35 +16,40 @@ function Quiz({
   scoreBoard,
   players,
 }) {
+  const isLogged = localStorage.getItem("isLogged");
   return (
     <div className="app">
-      <ScoreBoard players={players} />) : userAnswer ?
-      <>
-        <UserScore
-          score={score}
-          correctAnswers={correctAnswers}
-          questionsAnswered={questionsAnswered}
-        />
-        <Question
-          currentQuestion={currentQuestion}
-          questionsAnswered={questionsAnswered}
-          setUserAnswer={setUserAnswer}
-        />
-        <RateQuestion onClick={onClick} userRating={userRating} />
-      </>
-      : (
-      <>
-        <UserScore
-          score={score}
-          correctAnswers={correctAnswers}
-          questionsAnswered={questionsAnswered}
-        />
-        <Question
-          currentQuestion={currentQuestion}
-          questionsAnswered={questionsAnswered}
-          setUserAnswer={setUserAnswer}
-        />
-      </>
+      {!isLogged ? (
+        <div className="loginAgain">You need to log in again!</div>
+      ) : scoreBoard ? (
+        <ScoreBoard players={players} />
+      ) : userAnswer ? (
+        <>
+          <UserScore
+            score={score}
+            correctAnswers={correctAnswers}
+            questionsAnswered={questionsAnswered}
+          />
+          <Question
+            currentQuestion={currentQuestion}
+            questionsAnswered={questionsAnswered}
+            setUserAnswer={setUserAnswer}
+          />
+          <RateQuestion onClick={onClick} userRating={userRating} />
+        </>
+      ) : (
+        <>
+          <UserScore
+            score={score}
+            correctAnswers={correctAnswers}
+            questionsAnswered={questionsAnswered}
+          />
+          <Question
+            currentQuestion={currentQuestion}
+            questionsAnswered={questionsAnswered}
+            setUserAnswer={setUserAnswer}
+          />
+        </>
       )}
     </div>
   );

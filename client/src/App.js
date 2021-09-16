@@ -32,6 +32,11 @@ export default function App() {
       },
     });
     setCurrentQuestion(res.data);
+    if (res.status === 200) {
+      localStorage.setItem("isLogged", "true");
+    } else {
+      localStorage.setItem("isLogged", "false");
+    }
   }
 
   const handleAnswerRateQuestion = async (isRate) => {
