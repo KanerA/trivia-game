@@ -26,12 +26,12 @@ export default function App() {
   }, []);
 
   async function getQuestion() {
-    let { data } = await axios.get("/quiz/question", {
+    let res = await axios.get("/quiz/question", {
       headers: {
         authorization: "Bearer " + localStorage.getItem("accessToken"),
       },
     });
-    setCurrentQuestion(data);
+    setCurrentQuestion(res.data);
   }
 
   const handleAnswerRateQuestion = async (isRate) => {
