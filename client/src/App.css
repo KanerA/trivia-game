@@ -1,112 +1,112 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100&display=swap");
 
 body {
-    margin: 0 auto;
-    background-color: #03B5AA;
-    color: #023436;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    font-family: 'Antonio', sans-serif;
-    justify-content: center;
-    align-items: center;
-    margin-top: 15%;
-    font-size: 20px;
-    font-weight: 600;
+  margin: 0 auto;
+  background-color: #03b5aa;
+  color: #023436;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  font-family: "Antonio", sans-serif;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15%;
+  font-size: 25px;
+  font-weight: 600;
 }
 
 .app {
-    margin: auto;
+  margin: auto;
 }
 
 .option {
-    all: unset;
-    background-color: #037971;
-    padding: 5px;
-    border-radius: 5px;
-    margin: 5px;
+  all: unset;
+  background-color: #037971;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 .option:hover {
-    background-color: #049A8F;
-    cursor: pointer;
+  background-color: #049a8f;
+  cursor: pointer;
 }
 
-.rateOptions{
-    display: flex;
+.rateOptions {
+  display: flex;
 }
 
 .rateOption {
-    background-color: #037971;
-    margin: 5px;
-    padding: 3px;
-    width: 30%;
-    border-radius: 9999px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  background-color: #037971;
+  margin: 5px;
+  padding: 3px;
+  width: 30%;
+  border-radius: 9999px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .rateOption:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .loginContainer,
 .signUpContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
 }
 
 button {
-    border: none;
-    background-color: #9e9d9d;
-    margin: 10px;
+  border: none;
+  background-color: #9e9d9d;
+  margin: 10px;
 }
 
 .rateButtons {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 .rateButton {
-    font-size: 20px;
-    border-radius: 9999px;
-    padding: 7px;
-    cursor: pointer;
+  font-size: 20px;
+  border-radius: 9999px;
+  padding: 7px;
+  cursor: pointer;
 }
 
-.score-section{
-    font-weight: 800;
+.score-section {
+  font-weight: 800;
+  font-size: 30px;
 }
 
 .question-section {
-    font-weight: 800;
+  font-weight: 800;
 }
 
 .scoreBoard {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    width: 400px;
-    color: white;
-    font-size: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  color: white;
+  font-size: 30px;
 }
 
 .scoreBoardTitle,
 .scoreBoardUser {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .boardCell {
-    width: 50%;
-    margin: 5px 10px;
-    padding:0 10px;
+  width: 50%;
+  margin: 5px 10px;
+  padding: 0 10px;
 }
