@@ -104,7 +104,6 @@ const getQuestion = async (req, res) => {
 };
 
 const saveRatedQuestion = async (req, res) => {
-  console.log("hi");
   try {
     const { body } = req;
     const savedQuery = {
@@ -144,6 +143,7 @@ const saveRatedQuestion = async (req, res) => {
       res.status(200).json({ message: "update" });
     }
   } catch (err) {
+    console.log(err);
     res.status(500).json({ error: err.message });
   }
 };
