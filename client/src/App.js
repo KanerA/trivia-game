@@ -5,6 +5,7 @@ import axios from "axios";
 import Quiz from "./components/Quiz";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+import Home from "./components/Home";
 
 export default function App() {
   const [currentQuestion, setCurrentQuestion] = useState("");
@@ -145,7 +146,8 @@ export default function App() {
       <div className="container">
         <Router>
           <Switch>
-            <Route path="/" exact>
+            <Route path="/" component={Home} exact />
+            <Route path="/login">
               <Login
                 onUserNameChange={onUserNameChange}
                 onPasswordChange={onPasswordChange}
