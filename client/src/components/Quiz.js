@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Question from "./Question";
 import RateQuestion from "./RateQuestion";
 import ScoreBoard from "./ScoreBoard";
@@ -17,10 +18,14 @@ function Quiz({
   players,
 }) {
   const isLogged = localStorage.getItem("isLogged");
+
   return (
     <div className="app">
       {!isLogged ? (
-        <div className="loginAgain">You need to log in again!</div>
+        <>
+          <div className="loginAgain">You need to log in again!</div>
+          <Link to="/login" />
+        </>
       ) : scoreBoard ? (
         <ScoreBoard players={players} />
       ) : userAnswer ? (
